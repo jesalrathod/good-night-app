@@ -8,13 +8,13 @@ RSpec.describe Follow, type: :model do
   describe "#follower_id" do
     it { should belong_to(:follower) }
 
-    #context "with invalid value" do
+    context "with invalid value" do
       it "should be invalid" do
         follow.follower_id = nil
         follow.followee_id = 1
         expect(follow).to_not be_valid
       end
-    #end
+    end
 
     context "with valid value" do
       it "should be valid" do
@@ -26,13 +26,13 @@ RSpec.describe Follow, type: :model do
   describe "#followee_id" do
     it { should belong_to(:followee) }
 
-    #context "with invalid value" do
+    context "with invalid value" do
       it "should be invalid" do
         follow.follower_id = 2
         follow.followee_id = nil
         expect(follow).to_not be_valid
       end
-    #end
+    end
 
     context "with valid value" do
       it "should be valid" do
