@@ -1,25 +1,72 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { User.new(name: 'Bob Marle') }
 
   describe "associations" do
-    it { should have_many(:following_users) }
-    it { should have_many(:followed_users) }
-    it { should have_many(:followers).through(:following_users) }
-    it { should have_many(:followees).through(:followed_users) }
+    it { should have_many(:reverse_followings) }
+    it { should have_many(:followings) }
+    it { should have_many(:followers).through(:reverse_followings) }
+    it { should have_many(:followees).through(:followings) }
   end
 
-  context "with valid attributes" do
-    it "is valid with valid attributes" do
-      expect(subject).to be_valid
+  it "is valid with name" do
+    user = FactoryBot.create(:user)
+    expect(user).to be_valid
+  end
+
+  it "is not valid without name" do
+    user = FactoryBot.create(:user)
+    user.name = nil
+    expect(user).to_not be_valid
+  end
+
+  describe '#follow' do
+    let(:follower) { create(:user) }
+    let(:followee) { create(:user) }
+
+    it 'creates a relationship' do
+      expect {
+        follower.follow(followee)
+      }.to change(Follow, :count).by(1)
+    end
+
+    it 'creates a follower_relationship for the follower' do
+      follower.follow(followee)
+
+      expect(follower.followees).to include(followee)
+    end
+
+    it 'creates a followee_relationship for the followee' do
+      follower.follow(followee)
+
+      expect(followee.followers).to include(follower)
     end
   end
 
-  context "with invalid attributes" do
-    it "is not valid without a name" do
-      subject.name = nil
-      expect(subject).to_not be_valid
+  describe '#unfollow' do
+    let(:follower) { create(:user) }
+    let(:followee) { create(:user) }
+
+    before do
+      follower.follow(followee)
+    end
+
+    it 'destroys the relationship' do
+      expect {
+        follower.unfollow(followee)
+      }.to change(Follow, :count).by(-1)
+    end
+
+    it 'destroys the follower_relationship for the follower' do
+      follower.unfollow(followee)
+
+      expect(follower.followees).not_to include(followee)
+    end
+
+    it 'destroys the followee_relationship for the followee' do
+      follower.unfollow(followee)
+
+      expect(followee.followers).not_to include(follower)
     end
   end
 
