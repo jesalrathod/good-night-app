@@ -8,7 +8,7 @@ class Api::V1::FollowsController < Api::V1::BaseApiController
       return
     end
 
-    if follower.follow(followee)
+    if follower&.follow(followee)
       render json: [follower, followee].to_json, status: :created
     else
       render json_errors: follower.errors, status: :unprocessable_entity
@@ -16,9 +16,9 @@ class Api::V1::FollowsController < Api::V1::BaseApiController
   end
 
   def destroy
-    follower = User.find_by(name: params[:follower_name])
-    followee = User.find_by(name: params[:followee_name])
-    if follower.unfollow(followee)
+    follower = User.find_by!(name: params[:follower_name])
+    followee = User.find_by!(name: params[:followee_name])
+    if follower&.unfollow(followee)
       render json: {}, status: :no_content
     else
       render json_errors: follower.errors, status: :unprocessable_entity
