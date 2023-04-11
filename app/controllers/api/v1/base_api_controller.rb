@@ -6,7 +6,7 @@ class Api::V1::BaseApiController < ApplicationController
   rescue_from StandardError, with: :handle_error
 
   def current_user
-    @current_user ||= User.find_or_create_by(name: params[:name])
+    @current_user ||= User.find_or_create_by(name: 'Demo User')
   end
 
   private
