@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :follows, only: [:create, :destroy]
       resources :clocks, only: [:create, :index]
+      get "/clocks/user_sleep_records", to: "clocks#user_sleep_records"
     end
   end
 end

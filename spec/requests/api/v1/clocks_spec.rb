@@ -16,7 +16,7 @@ RSpec.describe "Api::V1::Clocks", type: :request do
   describe "POST #create" do
     context "when user is authenticated" do
       let(:user) { create(:user) }
-      let(:clocks) { Clock.new(clock_in_time: Time.now, clock_out_time: nil, user: user) }
+      let(:clocks) { Clock.new(clock_in_time: Time.now, clock_out_time: Time.now + 4.hours, user: user) }
 
       it "creates a new clock record" do
         expect(clocks).to be_valid
