@@ -15,7 +15,7 @@ class Api::V1::ClocksController < Api::V1::BaseApiController
   # GET /clocks
   def index
     user = user_check_params(params[:name])
-    clocks = user.clocks.where(clock_out_time: nil).order(created_at: :desc)
+    clocks = user.clocks.order(created_at: :desc)
     render json: clocks
   end
 
