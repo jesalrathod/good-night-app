@@ -20,7 +20,7 @@
 ### Follow a User
 * API end-point: `POST /api/v1/follows`
 * Request body: `{ "follower_name": "Bob Marle", "followee_name": "Charlie Chaplin" }`
-* Response body: `{"id": 1, "name": "Jesal Rathod", "created_at": "2023-04-10T12:26:48.624Z", "updated_at": "2023-04-10T12:26:48.624Z"}, {"id": 38, "name": "Charlie Chaplin", "created_at": "2023-04-12T14:36:38.716Z", "updated_at": "2023-04-12T14:36:38.716Z"}`
+* Response body: `{"id": 1, "name": "BoB Marle", "created_at": "2023-04-10T12:26:48.624Z", "updated_at": "2023-04-10T12:26:48.624Z"}, {"id": 38, "name": "Charlie Chaplin", "created_at": "2023-04-12T14:36:38.716Z", "updated_at": "2023-04-12T14:36:38.716Z"}`
 * Response code: 201
 
 ### Unfollow a User
